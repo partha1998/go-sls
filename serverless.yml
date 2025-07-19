@@ -1,0 +1,31 @@
+service: product-api
+
+provider:
+  name: aws
+  # runtime: provided.al2
+  region: us-east-1
+
+plugins:
+  - serverless-offline
+  # - serverless-dotenv-plugin
+
+custom:
+  serverless-offline:
+    httpPort: 3001
+
+functions:
+  uploadProduct:
+    handler: bin/upload_product
+    events:
+      - http:
+          path: upload
+          method: post
+  getAllProducts:
+    handler: get_all_products/main.go
+    events:
+      - http:
+          path: products
+          method: get
+
+package:
+  individually: true
